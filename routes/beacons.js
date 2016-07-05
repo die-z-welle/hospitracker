@@ -6,7 +6,9 @@ var BSON = require('bson');
 
 /* GET Beacons listing. */
 router.get('/', function(req, res, next) {
-  Beacons.find({}, function(err, docs) {
+  Beacons.find({})
+  .populate('room')
+  .exec(function(err, docs) {
     if (err) {
       console.err('errors occurred on querying Beacons');
     }
@@ -16,7 +18,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res) {
    var id = req.params.id;
-   Beacons.findOne({'_id': new BSON.ObjectID(id)}, function(err, beacon) {
+   Beacons.findOne({'_id': new BSON.ObjectID(id)})
+   .populate('room')
+   .exec(function(err, beacon) {
       res.send(beacon);
    });
 });

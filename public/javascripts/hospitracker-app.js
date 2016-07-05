@@ -14,11 +14,6 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
         controller: 'MainCtrl',
         activetab: 'landingpage'
     })
-    .when('/test', {
-        templateUrl: '/templates/test.html',
-        controller: 'MainCtrl',
-        activetab: 'test'
-    })
     .when('/beacons', {
         templateUrl: '/templates/beacons.html',
         controller: 'BeaconCtrl',
