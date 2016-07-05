@@ -16,10 +16,23 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
         controller: 'MainCtrl',
         activetab: 'test'
     })
+    .when('/users', {
+        templateUrl: '/templates/users.html',
+        controller: 'UserCtrl',
+        activetab: 'users'
+    })
     .otherwise('/');
 }])
 .controller('MainCtrl', function($scope) {
-  
+
+})
+.controller('UserCtrl', function($scope, UserService) {
+  $scope.users = UserService.find();
+
+  $scope.create = function() {
+    UserService.create($scope.newUser);
+    $scope.newUser = null;
+  };
 })
 .service('UserService', function($resource) {
     return $resource('/users/:id', {}, {

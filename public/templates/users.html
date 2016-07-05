@@ -1,0 +1,36 @@
+<div class="row" ng-repeat="user in users">
+
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading" ng-click="createDialog = !createDialog">
+    Create user <span class="glyphicon pull-right" ng-class="(createDialog ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down')"></span>
+  </div>
+  <div class="panel-body" ng-show="createDialog">
+    <form name="userdialog" ng-submit="create(newUser)">
+      <div class="row">
+        <div class="col-xs-4">
+            <div class="form-group" ng-class="{ 'has-error' : userdialog.firstname.$invalid && userdialog.$submitted }">
+                <label>Vorname</label>
+                <input name="firstname" type="text" class="form-control" ng-model="newUser.firstname">
+            </div>
+        </div>
+        <div class="col-offset-xs-2 col-xs-4">
+            <div class="form-group" ng-class="{ 'has-error' : userdialog.lastname.$invalid && userdialog.$submitted }">
+                <label>Nachname</label>
+                <input name="lastname" type="text" class="form-control" ng-model="newUser.lastname">
+            </div>
+        </div>
+      </div>
+      <div style="margin-top: 20px;" class="row">
+        <div class="col-xs-10">
+            <div class="form-group" ng-class="{ 'has-error' : userdialog.raspiid.$invalid && userdialog.$submitted }">
+                <label>Raspberry ID</label>
+                <input name="raspiid" type="text" class="form-control" ng-model="newUser.raspiid">
+            </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit" ng-disabled="(!newUser.firstname || !newUser.lastname || !newUser.raspiid)">Create</button>
+    </form>
+  </div>
+</div>
