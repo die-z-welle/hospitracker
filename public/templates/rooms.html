@@ -1,0 +1,50 @@
+<table class="table table-hover">
+  <thead>
+    <th>identification</th>
+    <th>Designation</th>
+    <th>Purpose</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="room in rooms">
+      <td>{{room.identification}}</td>
+      <td>{{room.designation}}</td>
+      <td>{{room.purpose}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="panel panel-default">
+  <div class="panel-heading" ng-click="createDialog = !createDialog">
+    Add room <span class="glyphicon pull-right" ng-class="(createDialog ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down')"></span>
+  </div>
+  <div class="panel-body" ng-show="createDialog">
+    <form name="roomdialog" ng-submit="create(newRoom)">
+      <div style="margin-top: 20px;" class="row">
+        <div class="col-xs-10">
+            <div class="form-group" ng-class="{ 'has-error' : roomdialog.identification.$invalid && roomdialog.$submitted }">
+                <label>Identification</label>
+                <input name="identification" type="text" class="form-control" ng-model="newRoom.identification">
+            </div>
+        </div>
+      </div>
+      <div style="margin-top: 20px;" class="row">
+        <div class="col-xs-10">
+            <div class="form-group" ng-class="{ 'has-error' : roomdialog.designation.$invalid && roomdialog.$submitted }">
+                <label>Designation</label>
+                <input name="designation" type="text" class="form-control" ng-model="newRoom.designation">
+            </div>
+        </div>
+      </div>
+      <div style="margin-top: 20px;" class="row">
+        <div class="col-xs-10">
+            <div class="form-group" ng-class="{ 'has-error' : roomdialog.purpose.$invalid && roomdialog.$submitted }">
+                <label>Purpose</label>
+                <input name="purpose" type="text" class="form-control" ng-model="newRoom.purpose">
+            </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" type="submit" ng-disabled="(!newRoom.identification || !newRoom.designation || !newRoom.purpose)">Add</button>
+    </form>
+  </div>
+</div>

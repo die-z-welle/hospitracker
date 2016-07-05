@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Users = require('../models/Person');
+var Beacons = require('../models/Beacon');
 var BSON = require('bson');
 
-/* GET users listing. */
+/* GET Beacons listing. */
 router.get('/', function(req, res, next) {
-  Users.find({}, function(err, docs) {
+  Beacons.find({}, function(err, docs) {
     if (err) {
-      console.err('errors occurred on querying users');
+      console.err('errors occurred on querying Beacons');
     }
     res.send(docs);
   });
@@ -16,16 +16,16 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res) {
    var id = req.params.id;
-   Users.findOne({'_id': new BSON.ObjectID(id)}, function(err, user) {
-      res.send(user);
+   Beacons.findOne({'_id': new BSON.ObjectID(id)}, function(err, beacon) {
+      res.send(beacon);
    });
 });
 
-/* GET users listing. */
+/* GET Beacons listing. */
 router.post('/', function(req, res, next) {
   var item = req.body;
   item._id = null;
-  new Users(item).save();
+  new Beacons(item).save();
   res.send(item);
 });
 

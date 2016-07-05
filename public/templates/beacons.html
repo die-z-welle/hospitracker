@@ -1,0 +1,62 @@
+<table class="table table-hover">
+  <thead>
+    <th>UUID</th>
+    <th>Minor</th>
+    <th>Major</th>
+    <th>Room</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="beacon in beacons">
+      <td>{{beacon.uuid}}</td>
+      <td>{{beacon.minor}}</td>
+      <td>{{beacon.major}}</td>
+      <td>{{beacon.room.identification}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="panel panel-default">
+  <div class="panel-heading" ng-click="createDialog = !createDialog">
+    Add beacon <span class="glyphicon pull-right" ng-class="(createDialog ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down')"></span>
+  </div>
+  <div class="panel-body" ng-show="createDialog">
+    <form name="beacondialog" ng-submit="create(newBeacon)">
+      <div style="margin-top: 20px;" class="row">
+        <div class="col-xs-10">
+            <div class="form-group" ng-class="{ 'has-error' : beacondialog.uuid.$invalid && beacondialog.$submitted }">
+                <label>UUID</label>
+                <input name="uuid" type="text" class="form-control" ng-model="newBeacon.uuid">
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-4">
+            <div class="form-group" ng-class="{ 'has-error' : beacondialog.minor.$invalid && beacondialog.$submitted }">
+                <label>Minor</label>
+                <input name="minor" type="text" class="form-control" ng-model="newBeacon.minor">
+            </div>
+        </div>
+        <div class="col-offset-xs-2 col-xs-4">
+            <div class="form-group" ng-class="{ 'has-error' : beacondialog.major.$invalid && beacondialog.$submitted }">
+                <label>Major</label>
+                <input name="major" type="text" class="form-control" ng-model="newBeacon.major">
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-10">
+            <div class="form-group" ng-class="{ 'has-error' : beacondialog.room.$invalid && beacondialog.$submitted }">
+                <label>Room</label>
+                <select name="room" class="form-control" ng-model="newBeacon.room"
+                  ng-options="room._id as room.identification for room in rooms ">
+                </select>
+            </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" type="submit" ng-disabled="(!newBeacon.uuid || !newBeacon.minor || !newBeacon.major || !newBeacon.room)">Add</button>
+    </form>
+  </div>
+</div>

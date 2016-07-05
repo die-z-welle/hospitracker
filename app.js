@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var beacons = require('./routes/beacons');
+var rooms = require('./routes/rooms');
 
 var mongoose = require('mongoose');
 var BSON = require('bson');
@@ -27,6 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/beacons', beacons);
+app.use('/rooms', rooms);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

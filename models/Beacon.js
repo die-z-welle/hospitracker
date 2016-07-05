@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 
 var BeaconSchema = new mongoose.Schema({
-  uuid: UUID,
+  uuid: String,
   minor: Number,
   major: Number,
   room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room' }
 });
 
-mongoose.model('Beacon', BeaconSchema);
+module.exports = mongoose.model('Beacon', BeaconSchema);
