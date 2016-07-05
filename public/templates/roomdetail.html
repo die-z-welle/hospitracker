@@ -1,0 +1,41 @@
+<h1>{{room.identification}}</h1>
+<h3>{{room.designation}}</h3>
+<p>{{room.purpose}}</p>
+
+<table class="table table-hover">
+  <thead>
+    <th>UUID</th>
+    <th>Minor</th>
+    <th>Major</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="beacon in room.beacons">
+      <td>{{beacon.uuid}}</td>
+      <td>{{beacon.minor}}</td>
+      <td>{{beacon.major}}</td>
+      <td><span class="glyphicon glyphicon-trash" ng-click="removeBeacon(beacon)"></span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="panel panel-default">
+  <div class="panel-heading" ng-click="createDialog = !createDialog">
+    Add beacon <span class="glyphicon pull-right" ng-class="(createDialog ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down')"></span>
+  </div>
+  <div class="panel-body" ng-show="createDialog">
+    <form name="beacondialog" ng-submit="addBeacon(newBeaconEntry)">
+      <div style="margin-top: 20px;" class="row">
+        <div class="col-xs-10">
+            <div class="form-group" ng-class="{ 'has-error' : beacondialog.beacon.$invalid && beacondialog.$submitted }">
+                <label>Beacon</label>
+                <select name="beacon" type="text" class="form-control" ng-model="newBeaconEntry"
+                  ng-options="(beacon.uuid + ' ' + beacon.minor + ' ' + beacon.major + ' | ' + beacon.room.identification) for beacon in beacons">
+                </select>
+            </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit" ng-disabled="(!newBeaconEntry)">Add</button>
+    </form>
+  </div>
+</div>

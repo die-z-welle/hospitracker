@@ -6,7 +6,7 @@
     <th></th>
   </thead>
   <tbody>
-    <tr ng-repeat="room in rooms">
+    <tr ng-repeat="room in rooms" ng-click="go(room._id)">
       <td>{{room.identification}}</td>
       <td>{{room.designation}}</td>
       <td>{{room.purpose}}</td>

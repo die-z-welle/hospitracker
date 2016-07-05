@@ -33,6 +33,14 @@ router.post('/', function(req, res, next) {
   res.send(item);
 });
 
+router.put('/:id', function(req, res) {
+   var id = req.params.id;
+   var item = req.body;
+   Beacons.findOneAndUpdate({'_id': new BSON.ObjectID(id)}, item, function(err, beacon) {
+     res.send(beacon);
+   });
+});
+
 router.delete('/:id', function(req, res) {
   var id = req.params.id;
   Beacons.findOne({'_id': new BSON.ObjectID(id)}, function(err, beacon) {
