@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Users = require('../models/Users');
+var BSON = require('bson');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -15,7 +16,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res) {
    var id = req.params.id;
-   User.findOne({'_id': new BSON.ObjectID(id)}, function(err, user) {
+   Users.findOne({'_id': new BSON.ObjectID(id)}, function(err, user) {
       res.send(user);
    });
 });

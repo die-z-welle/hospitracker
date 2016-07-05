@@ -1,6 +1,15 @@
-<div class="row" ng-repeat="user in users">
-
-</div>
+<table class="table table-hover">
+  <thead>
+    <th>Firstname</th>
+    <th>Lastname</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users" ng-click="go(user._id)">
+      <td>{{user.firstname}}</td>
+      <td>{{user.lastname}}</td>
+    </tr>
+  </tbody>
+</table>
 
 <div class="panel panel-default">
   <div class="panel-heading" ng-click="createDialog = !createDialog">
