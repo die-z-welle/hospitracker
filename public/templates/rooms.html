@@ -3,12 +3,14 @@
     <th>identification</th>
     <th>Designation</th>
     <th>Purpose</th>
+    <th></th>
   </thead>
   <tbody>
     <tr ng-repeat="room in rooms">
       <td>{{room.identification}}</td>
       <td>{{room.designation}}</td>
       <td>{{room.purpose}}</td>
+      <td><span class="glyphicon glyphicon-trash" ng-click="delete(room._id)"></span></td>
     </tr>
   </tbody>
 </table>

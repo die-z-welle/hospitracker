@@ -76,6 +76,12 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
       $scope.newBeacon = null;
     });
   };
+
+  $scope.delete = function(id) {
+    BeaconService.delete({id: id}).$promise.then(function() {
+      $scope.refresh();
+    });
+  };
 })
 .controller('RoomCtrl', function($scope, $location, RoomService) {
   $scope.rooms = [];
@@ -90,6 +96,12 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     RoomService.create($scope.newRoom).$promise.then(function() {
       $scope.refresh();
       $scope.newRoom = null;
+    });
+  };
+
+  $scope.delete = function(id) {
+    RoomService.delete({id: id}).$promise.then(function() {
+      $scope.refresh();
     });
   };
 })

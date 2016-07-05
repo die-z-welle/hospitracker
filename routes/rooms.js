@@ -29,4 +29,12 @@ router.post('/', function(req, res, next) {
   res.send(item);
 });
 
+router.delete('/:id', function(req, res) {
+  var id = req.params.id;
+  Rooms.findOne({'_id': new BSON.ObjectID(id)}, function(err, room) {
+    room.remove();
+    res.send('');
+  });
+});
+
 module.exports = router;

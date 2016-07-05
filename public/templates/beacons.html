@@ -4,6 +4,7 @@
     <th>Minor</th>
     <th>Major</th>
     <th>Room</th>
+    <th></th>
   </thead>
   <tbody>
     <tr ng-repeat="beacon in beacons">
@@ -11,6 +12,7 @@
       <td>{{beacon.minor}}</td>
       <td>{{beacon.major}}</td>
       <td>{{beacon.room.identification}}</td>
+      <td><span class="glyphicon glyphicon-trash" ng-click="delete(beacon._id)"></span></td>
     </tr>
   </tbody>
 </table>
