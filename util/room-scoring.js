@@ -37,7 +37,7 @@ var roomscore = function(beaconList, callback) {
 
     for(i in rooms) {
       rooms[i].dividedScore = rooms[i].score / rooms[i].numberOfBeacons;
-      console.log(i + ", " + rooms[i]);
+      console.log(i + ", " + JSON.stringify(rooms[i]));
     }
 
     //console.log(rooms);
@@ -57,7 +57,7 @@ var roomscore = function(beaconList, callback) {
 
 
 
-	  var accuracy = rooms[winner] / totalscore;
+	  var accuracy = rooms[winner].dividedScore / totalscore;
 	  callback(winner, accuracy);
 	});
 }
