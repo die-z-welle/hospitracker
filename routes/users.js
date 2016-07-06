@@ -21,6 +21,17 @@ router.get('/:id', function(req, res) {
    });
 });
 
+
+router.get('/:id/measurements', function(req, res) {
+   var id = req.params.id;
+   Persons.findOne({'_id': new BSON.ObjectID(id)})
+	 .populate('measurements')
+	 .exec(function(err, user) {
+      res.send(user.measurements);
+   });
+});
+
+
 /* GET Persons listing. */
 router.post('/', function(req, res, next) {
   var item = req.body;
