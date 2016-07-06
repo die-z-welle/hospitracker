@@ -21,6 +21,10 @@ router.get('/', function(req, res, next) {
 /* GET Measurements listing. */
 router.post('/', function(req, res, next) {
   var item = req.body;
+	console.log(JSON.stringify(item));
+
+	res.send('');
+	/*
 	Person.findOne({'deviceId': item.deviceId}, function(err, person) {
 		item.measurements.forEach(function(beaconMeasurement) {
 			Beacon.findOne({'minor': beaconMeasurement.minor, 'major': beaconMeasurement.major, 'uuid': beaconMeasurement.uuid}, function(err, beacon) {
@@ -37,6 +41,7 @@ router.post('/', function(req, res, next) {
 
 		});
 	});
+	*/
 });
 
 module.exports = router;
