@@ -2,11 +2,12 @@ var mongoose = require('mongoose');
 var Beacon = mongoose.model('Beacon');
 var Room = mongoose.model('Room');
 
-var getroom = function(beacon) {
+var populateBeacon = function(beacon, callback) {
   Beacon.findOne({'minor': beacon.minor, 'major': beacon.major, 'uuid': beacon.uuid})
 	.populate('room')
 	.exec(function(err, beacon) {
-		return beacon;
+    //console.log(beacon);
+		callback(beacon);
   });
 }
 
@@ -16,27 +17,35 @@ var transformRSSItoScore = function(rssi) {
 
 var roomscore = function(beaconList, callback) {
 
+  var beacons = [];
+
   for(i in beaconList) {
-    var _room = getroom(beaconList[i]);
-    if(_room != null) {
-      beaconList[i].room = _room.identification;
-    } else {
-        beaconList[i].room = null;
-    }
+    //console.log(beaconList[i]);
+    populateBeacon(beaconList[i], function(beacon) {
+      if(beacon != null) {
+        beacons.push(beacon);
+      }
+    });
+
+
+  }
+
+  for(i in beacons) {
+    console.log(beacons);
   }
 
   var rooms = {};
 
   for(i in beaconList) {
-    if(beaconList[i].room != null) {
-      rooms[beaconList[i].room] = 0;
+    if(beaconList[i].hasOwnProperty("room")) {
+      rooms[beaconList[i].room.identification] = 0;
     }
   }
 
 
   for(i in beaconList) {
     var rssi = beaconList[i].value;
-    rooms[beaconList[i].room] += transformRSSItoScore(rssi);
+    rooms[beaconList[i].room.identification] += transformRSSItoScore(rssi);
   }
 
   var winner = null;
