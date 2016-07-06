@@ -41,8 +41,9 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     })
     .otherwise('/');
 }])
-.controller('MainCtrl', function($scope) {
-
+.controller('MainCtrl', function($scope, UserService) {
+  $scope.users = UserService.find();
+	
 })
 .controller('UserCtrl', function($scope, $location, UserService) {
   $scope.users = [];

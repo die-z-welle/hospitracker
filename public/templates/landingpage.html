@@ -1,1 +1,21 @@
-<h1>home</h1>
+<h1>Benutzerübersicht</h1>
+<table class="table table-hover">
+  <thead>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>DeviceId</th>
+		<th>Location</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users">
+      <td>{{user.firstname}}</td>
+      <td>{{user.lastname}}</td>
+			<td>{{user.deviceId}}</td>
+			<td>
+				<span ng-repeat="abidance in user.abidances | orderBy: 'joined' | limitTo:2">
+					{{abidance.joined}}: {{abidance.room.identification}}
+				</span>
+			</td>
+    </tr>
+  </tbody>
+</table>
