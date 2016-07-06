@@ -12,9 +12,7 @@
       <td>{{user.lastname}}</td>
 			<td>{{user.deviceId}}</td>
 			<td>
-				<span ng-repeat="abidance in user.abidances | orderBy:'joined' | limitTo:2">
-					{{abidance.joined}}: {{abidance.room.identification}}
-				</span>
+				{{user.location.room}} | {{user.location.accuracy}}
 			</td>
     </tr>
   </tbody>

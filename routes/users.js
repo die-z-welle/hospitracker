@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Persons = mongoose.model('Person');
 var Measurements = mongoose.model('Measurement');
+var roomscore = require('../util/room-scoring');
 
 
 /* GET Persons listing. */
@@ -44,18 +45,25 @@ router.get('/:id/location', function(req, res) {
 				var prevDate = null;
 				docs.forEach(function(doc) {
 					if (!prevDate || prevDate === doc.time) {
-						measurements.push(doc);
+						measurements.push(toTransientMeasurement(doc));
 						prevDate = doc.time;
 					}
 				});
 
-				// determine location from docs
-				var location = {};
-    		res.send(location);
+			  roomscore(measurements, function(room, accuracy) {
+					res.send({"room": room, "accuracy": accuracy});
+			  });
 			});
 		}
   });
 });
+
+function toTransientMeasurement(measurement) {
+	return {
+		"value": measurement.value,
+		"mac": measurement.beacon.mac
+	};
+};
 
 
 /* GET Persons listing. */

@@ -42,7 +42,12 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     .otherwise('/');
 }])
 .controller('MainCtrl', function($scope, UserService, MeasurementService) {
-  $scope.users = UserService.find();
+  UserService.find().$promise.then(function(result) {
+		$scope.users = result;
+		$scope.users.forEach(function(user) {
+			user.location = UserService.location({id: user._id});
+		});
+	});
 	$scope.measurements = MeasurementService.find();
 })
 .controller('UserCtrl', function($scope, $location, UserService) {
@@ -236,7 +241,7 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     });
 })
 .service('UserService', function($resource) {
-  return $resource('/users/:id', {}, {
+  return $resource('/users/:id/:page', {}, {
     find: {
       method: 'GET',
       isArray: true
@@ -255,7 +260,14 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
       params: {
         id: '@id'
       }
-    }
+    },
+		location: {
+			method: 'GET',
+			params: {
+				id: '@id',
+				page: 'location'
+			}
+		}
   });
 })
 .service('MeasurementService', function($resource) {
