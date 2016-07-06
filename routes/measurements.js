@@ -23,11 +23,11 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var item = req.body;
 
-	/*
+	
   roomscore(item.measurements, function(room, accuracy) {
     console.log("RoomNr. " + room + ", Accuracy: " + accuracy);
   });
-	*/
+
 
 	Person.findOne({'deviceId': item.deviceId}, function(err, person) {
 		if (person) {

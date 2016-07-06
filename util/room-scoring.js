@@ -12,31 +12,51 @@ var populateBeacon = function(beacon, callback) {
 }
 
 var transformRSSItoScore = function(rssi) {
-  return -(rssi + 26);
+  return parseInt(rssi) + 100;
 }
 
 var roomscore = function(beaconList, callback) {
 	Beacon.find({}).populate('room').exec(function(err, result) {
-  	var beacons = [];
-	  for(i in beaconList) {
-			var b = result.filter(function(value) {
-					return value.minor === beaconList[i].minor && value.major === beaconList[i].major && value.uuid === beaconList[i].uuid;
-				});
-			beacons.push(b);
-			beaconList[i].room = b.room;
-	  }
 
-		for (i in beacons) {
-			console.log(JSON.stringify(beacons[i]));
+      for(i in result) {
+
+        for(j in beaconList) {
+
+          if(result[i].minor == beaconList[j].minor) {
+            result[i].value = beaconList[j].value;
+
+          }
+        }
+      }
+
+
+
+
+
+
+
+
+    var rooms = {};
+
+    for (i in result) {
+			if(result[i].room != undefined) {
+        rooms[result[i].room.identification] = 0;
+      }
 		}
 
-	  var rooms = {};
-	  for(i in beaconList) {
-	    if(beaconList[i].hasOwnProperty("room")) {
-		    var rssi = beaconList[i].value;
-		    rooms[beaconList[i].room.identification] = transformRSSItoScore(rssi);
-	    }
-	  }
+    for (i in result) {
+			if(result[i].room != undefined) {
+        var rssi = result[i].value;
+
+        rooms[result[i].room.identification] += transformRSSItoScore(rssi);
+        console.log("RoomNr. " + result[i].room.identification + ", Score: " + transformRSSItoScore(rssi));
+
+      }
+		}
+
+    for(i in rooms) {
+      console.log(i + ", " + rooms[i]);
+    }
 
 	  var winner = null;
 	  var totalscore = 0;
@@ -50,6 +70,8 @@ var roomscore = function(beaconList, callback) {
 	      }
 	    }
 	  }
+
+
 
 	  var accuracy = rooms[winner] / totalscore;
 	  callback(winner, accuracy);
