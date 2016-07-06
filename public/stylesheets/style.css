@@ -1,8 +1,19 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+table.table tr span.glyphicon {
+	visibility: hidden;
+}
+
+table.table tr:hover span.glyphicon {
+	visibility: visible;
+}
+
+table.table span.glyphicon:hover {
+	cursor: pointer;
+}
+
+td.pointer {
+	cursor: pointer;
 }

@@ -6,10 +6,10 @@
     <th></th>
   </thead>
   <tbody>
-    <tr ng-repeat="room in rooms" ng-click="go(room._id)">
-      <td>{{room.identification}}</td>
-      <td>{{room.designation}}</td>
-      <td>{{room.purpose}}</td>
+    <tr ng-repeat="room in rooms">
+      <td class="pointer" ng-click="go(room._id)">{{room.identification}}</td>
+      <td class="pointer" ng-click="go(room._id)">{{room.designation}}</td>
+      <td class="pointer" ng-click="go(room._id)">{{room.purpose}}</td>
       <td><span class="glyphicon glyphicon-trash" ng-click="delete(room._id)"></span></td>
     </tr>
   </tbody>
