@@ -28,20 +28,17 @@ router.get('/:id', function(req, res) {
 /* GET Rooms listing. */
 router.post('/', function(req, res, next) {
   var item = req.body;
-  item._id = null;
 
 	var beacons = item.beacons;
 	item.beacons = [];
-
-	var room = new Rooms(item);
-	room.save(function(err) {
+	new Rooms(item).save(function(err, room) {
 		if (beacons) {
 			beacons.forEach(function(beacon) {
 				beacon.room = room._id;
 				Beacons.findOneAndUpdate({'_id': beacon._id}, beacon, function(err) {});
 			});
 		}
-  	res.send(room);
+		res.send(room);
 	});
 });
 
