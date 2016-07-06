@@ -7,7 +7,10 @@ var Beacon = require('../models/Beacon');
 
 /* GET Measurements listing. */
 router.get('/', function(req, res, next) {
-  Measurements.find({}).exec(function(err, docs) {
+  Measurements.find({})
+	.populate('person')
+	.populate('beacon')
+	.exec(function(err, docs) {
     if (err) {
       console.err('errors occurred on querying Measurements');
     }

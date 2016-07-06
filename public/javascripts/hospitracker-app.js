@@ -41,9 +41,9 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     })
     .otherwise('/');
 }])
-.controller('MainCtrl', function($scope, UserService) {
+.controller('MainCtrl', function($scope, UserService, MeasurementService) {
   $scope.users = UserService.find();
-	
+	$scope.measurements = MeasurementService.find();
 })
 .controller('UserCtrl', function($scope, $location, UserService) {
   $scope.users = [];
@@ -229,27 +229,34 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
         }
     });
 })
-
 .service('UserService', function($resource) {
-    return $resource('/users/:id', {}, {
-        find: {
-            method: 'GET',
-            isArray: true
-        },
-        findById: {
-            method: 'GET',
-            params: {
-                id: '@id'
-            }
-        },
-        create: {
-            method: 'POST'
-        },
-        delete: {
-            method: 'DELETE',
-            params: {
-                id: '@id'
-            }
-        }
-    });
+  return $resource('/users/:id', {}, {
+    find: {
+      method: 'GET',
+      isArray: true
+    },
+    findById: {
+      method: 'GET',
+      params: {
+        id: '@id'
+      }
+    },
+    create: {
+      method: 'POST'
+    },
+    delete: {
+      method: 'DELETE',
+      params: {
+        id: '@id'
+      }
+    }
+  });
+})
+.service('MeasurementService', function($resource) {
+  return $resource('/measurements', {}, {
+    find: {
+      method: 'GET',
+      isArray: true
+    }
+  });
 });
