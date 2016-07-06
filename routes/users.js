@@ -24,7 +24,6 @@ router.get('/:id', function(req, res) {
 /* GET users listing. */
 router.post('/', function(req, res, next) {
   var item = req.body;
-  item._id = null;
   new Users(item).save();
   res.send(item);
 });

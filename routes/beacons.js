@@ -27,7 +27,6 @@ router.get('/:id', function(req, res) {
 /* GET Beacons listing. */
 router.post('/', function(req, res, next) {
   var item = req.body;
-  item._id = null;
   new Beacons(item).save();
   res.send(item);
 });
