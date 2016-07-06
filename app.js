@@ -6,13 +6,22 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
+var mongoose = require('mongoose');
+require('./models/Abidance');
+require('./models/Beacon');
+require('./models/Measurement');
+require('./models/Person');
+require('./models/Room');
+
+mongoose.connect('mongodb://localhost/hospitracker');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var beacons = require('./routes/beacons');
 var rooms = require('./routes/rooms');
 var measurements = require('./routes/measurements');
 
-var mongoose = require('mongoose');
+
 var BSON = require('bson');
 
 var app = express();
@@ -67,6 +76,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-mongoose.connect('mongodb://localhost/hospitracker');
+
 
 module.exports = app;

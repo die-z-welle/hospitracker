@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Rooms = require('../models/Room');
-var Beacons = require('../models/Beacon');
+var Rooms = mongoose.model('Room');
+var Beacons = mongoose.model('Beacon');
 
 /* GET Rooms listing. */
 router.get('/', function(req, res, next) {
