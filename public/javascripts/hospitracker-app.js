@@ -45,10 +45,22 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
   UserService.find().$promise.then(function(result) {
 		$scope.users = result;
 		$scope.users.forEach(function(user) {
-			user.location = UserService.location({id: user._id});
+			user.locations = [];
+			UserService.location({id: user._id}).$promise.then(function(locs) {
+				locs.forEach(function(loc) {
+					var l = loc;
+					l.time = $scope.dateFormat(new Date(loc.time));
+					user.locations.push(l);
+				});
+			});
 		});
 	});
 	$scope.measurements = MeasurementService.find();
+
+	$scope.dateFormat = function(d) {
+		return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+	};
+
 })
 .controller('UserCtrl', function($scope, $location, UserService) {
   $scope.users = [];
@@ -266,7 +278,8 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
 			params: {
 				id: '@id',
 				page: 'location'
-			}
+			},
+			isArray: true
 		}
   });
 })

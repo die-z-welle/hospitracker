@@ -38,33 +38,29 @@ router.get('/:id/location', function(req, res) {
   Persons.findOne({'_id': id}, function(err, user) {
 		if (user) {
 			Measurements.find({'person': user._id})
+			.populate('beacon')
 			.sort({'time': -1})
-			.limit(10)
+			.limit(20)
 			.exec(function(err, docs) {
-				var measurements = [];
-				var prevDate = null;
+				var measurements = {};
 				docs.forEach(function(doc) {
-					if (!prevDate || prevDate === doc.time) {
-						measurements.push(toTransientMeasurement(doc));
-						prevDate = doc.time;
+					if (!measurements[doc.time]) {
+						measurements[doc.time] = [];
 					}
+					measurements[doc.time].push(doc);
 				});
 
-			  roomscore(measurements, function(room, accuracy) {
-					res.send({"room": room, "accuracy": accuracy});
-			  });
+				var test = [];
+				for (i in measurements) {
+					test.push({time: i, values: measurements[i]});
+				}
+				roomscore(test, function(rooms) {
+					res.send(rooms);
+				});
 			});
 		}
   });
 });
-
-function toTransientMeasurement(measurement) {
-	return {
-		"value": measurement.value,
-		"mac": measurement.beacon.mac
-	};
-};
-
 
 /* GET Persons listing. */
 router.post('/', function(req, res, next) {

@@ -26,11 +26,9 @@ router.post('/', function(req, res, next) {
   var item = req.body;
 
 
-  roomscore(item.measurements, function(room, accuracy) {
-    console.log("RoomNr. " + room + ", Accuracy: " + accuracy);
-  });
-
-
+//  roomscore(item.measurements, function(room, accuracy) {
+//    console.log("RoomNr. " + room + ", Accuracy: " + accuracy);
+//  });
 	Person.findOne({'deviceId': item.deviceId}, function(err, person) {
 		if (person) {
 			item.measurements.forEach(function(beaconMeasurement) {
@@ -46,12 +44,12 @@ router.post('/', function(req, res, next) {
 							console.log(beacon.mac + ' / ' + JSON.stringify(doc));
 						});
 					} else {
-						console.log('no beacon found for ' + beaconMeasurement.mac);
+						//console.log('no beacon found for ' + beaconMeasurement.mac);
 					}
 				});
 			});
 		} else {
-			console.log('no person found for deviceId' + item.deviceId);
+			//console.log('no person found for deviceId' + item.deviceId);
 		}
 	});
 	res.send('');
