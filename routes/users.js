@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Users = require('../models/Person');
+var Persons = require('../models/Person');
 var BSON = require('bson');
 
-/* GET users listing. */
+/* GET Persons listing. */
 router.get('/', function(req, res, next) {
-  Users.find({}, function(err, docs) {
+  Persons.find({}, function(err, docs) {
     if (err) {
-      console.err('errors occurred on querying users');
+      console.err('errors occurred on querying Persons');
     }
     res.send(docs);
   });
@@ -16,15 +16,15 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res) {
    var id = req.params.id;
-   Users.findOne({'_id': new BSON.ObjectID(id)}, function(err, user) {
+   Persons.findOne({'_id': new BSON.ObjectID(id)}, function(err, user) {
       res.send(user);
    });
 });
 
-/* GET users listing. */
+/* GET Persons listing. */
 router.post('/', function(req, res, next) {
   var item = req.body;
-  new Users(item).save();
+  new Persons(item).save();
   res.send(item);
 });
 
