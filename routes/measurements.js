@@ -9,6 +9,8 @@ var roomscore = require('../util/room-scoring');
 /* GET Measurements listing. */
 router.get('/', function(req, res, next) {
   Measurements.find({})
+	.sort({'time': -1})
+	.limit(20)
 	.populate('person')
 	.populate('beacon')
 	.exec(function(err, docs) {
@@ -40,7 +42,9 @@ router.post('/', function(req, res, next) {
 							"person": person,
 							"beacon": beacon
 						};
-					  new Measurements(measurement).save();
+					  new Measurements(measurement).save(function(err, doc) {
+							console.log(beacon.mac + ' / ' + JSON.stringify(doc));
+						});
 					} else {
 						console.log('no beacon found for ' + beaconMeasurement.mac);
 					}
