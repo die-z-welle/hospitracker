@@ -7,4 +7,4 @@ var PersonSchema = new mongoose.Schema({
   abidances: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Abidance'}]
 });
 
-module.exports = mongoose.model('Person', PersonSchema);
+mongoose.model('Person', PersonSchema);

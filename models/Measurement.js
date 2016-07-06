@@ -7,4 +7,4 @@ var MeasurementSchema = new mongoose.Schema({
   value: Number
 });
 
-module.exports = mongoose.model('Measurement', MeasurementSchema);
+mongoose.model('Measurement', MeasurementSchema);

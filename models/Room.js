@@ -8,4 +8,4 @@ var RoomSchema = new mongoose.Schema({
   beacons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Beacon' }]
 });
 
-module.exports = mongoose.model('Room', RoomSchema);
+mongoose.model('Room', RoomSchema);

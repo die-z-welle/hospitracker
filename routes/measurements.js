@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Measurements = require('../models/Measurement');
-var Person = require('../models/Person');
-var Beacon = require('../models/Beacon');
+var Measurements = mongoose.model('Measurement');
+var Person = mongoose.model('Person');
+var Beacon = mongoose.model('Beacon');
 
 /* GET Measurements listing. */
 router.get('/', function(req, res, next) {
