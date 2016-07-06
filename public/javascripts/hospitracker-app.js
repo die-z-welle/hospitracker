@@ -88,11 +88,14 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     });
   };
 })
-.controller('RoomCtrl', function($scope, $location, RoomService) {
+.controller('RoomCtrl', function($scope, $location, RoomService, BeaconService) {
   $scope.rooms = [];
+	$scope.beacons = [];
+	$scope.activeBeacons = {};
 
   $scope.refresh = function() {
     $scope.rooms = RoomService.find();
+		$scope.beacons = BeaconService.find();
   };
 
   $scope.refresh();
@@ -109,9 +112,46 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
       $scope.refresh();
     });
   };
-  $scope.go = function(roomid) {
+
+	$scope.go = function(roomid) {
     $location.path('/roomdetail/' + roomid);
   };
+
+	$scope.getIdentifier = function(beacon) {
+		return getIdentifier(beacon);
+	}
+
+	function getIdentifier(beacon) {
+		return beacon.uuid + '.' + beacon.minor + '.' + beacon.major;
+	};
+
+	$scope.toggleBeacon = function(beacon) {
+		if (!angular.isDefined($scope.newRoom) || !angular.isDefined($scope.newRoom.beacons)) {
+			$scope.newRoom = {};
+			$scope.newRoom.beacons = [];
+		}
+
+		var found = false;
+		for (var i = 0; i < $scope.newRoom.beacons.length; i++) {
+			var beaconEntry = $scope.newRoom.beacons[i];
+			if (beaconEntry.uuid === beacon.uuid && beaconEntry.minor === beacon.minor && beaconEntry.major === beacon.major) {
+				found = true;
+				$scope.newRoom.beacons.splice(i, 1);
+			}
+		}
+
+		$scope.activeBeacons[getIdentifier(beacon)] = !found;
+		if (!found) {
+			$scope.newRoom.beacons.push(beacon);
+		}
+
+		console.log(getIdentifier(beacon) + " " + $scope.activeBeacons[getIdentifier(beacon)]);
+	};
+
+	$scope.isActive = function(beacon) {
+		return $scope.activeBeacons[getIdentifier(beacon)];
+	};
+
 })
 .controller('RoomDetailCtrl', function($scope, $routeParams, RoomService, BeaconService) {
   $scope.room = {};
@@ -139,7 +179,6 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
       $scope.newBeaconEntry = null;
     });
   };
-
 })
 .controller('UserDetailCtrl', function($scope, $routeParams, UserService) {
   $scope.user = UserService.findById({id: $routeParams.id});
