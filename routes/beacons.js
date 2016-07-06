@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Beacons = require('../models/Beacon');
-var BSON = require('bson');
 
 /* GET Beacons listing. */
 router.get('/', function(req, res, next) {
@@ -18,7 +17,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res) {
    var id = req.params.id;
-   Beacons.findOne({'_id': new BSON.ObjectID(id)})
+   Beacons.findOne({'_id': id})
    .populate('room')
    .exec(function(err, beacon) {
       res.send(beacon);
@@ -36,14 +35,14 @@ router.post('/', function(req, res, next) {
 router.put('/:id', function(req, res) {
    var id = req.params.id;
    var item = req.body;
-   Beacons.findOneAndUpdate({'_id': new BSON.ObjectID(id)}, item, function(err, beacon) {
+   Beacons.findOneAndUpdate({'_id': id}, item, function(err, beacon) {
      res.send(beacon);
    });
 });
 
 router.delete('/:id', function(req, res) {
   var id = req.params.id;
-  Beacons.findOne({'_id': new BSON.ObjectID(id)}, function(err, beacon) {
+  Beacons.findOne({'_id': id}, function(err, beacon) {
     beacon.remove();
     res.send('');
   });

@@ -126,8 +126,7 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
 	};
 
 	$scope.toggleBeacon = function(beacon) {
-		if (!angular.isDefined($scope.newRoom) || !angular.isDefined($scope.newRoom.beacons)) {
-			$scope.newRoom = {};
+		if (!angular.isDefined($scope.newRoom.beacons)) {
 			$scope.newRoom.beacons = [];
 		}
 
