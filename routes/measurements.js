@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Measurements = mongoose.model('Measurement');
 var Person = mongoose.model('Person');
 var Beacon = mongoose.model('Beacon');
+var roomscore = require('../util/room-scoring');
 
 /* GET Measurements listing. */
 router.get('/', function(req, res, next) {
@@ -21,6 +22,11 @@ router.get('/', function(req, res, next) {
 /* GET Measurements listing. */
 router.post('/', function(req, res, next) {
   var item = req.body;
+
+  roomscore.roomscore(item.measurements, function(room, accuracy) {
+    console.log("RoomNr. " + room + ", Accuracy: " + accuracy);
+  });
+
 	Person.findOne({'deviceId': item.deviceId}, function(err, person) {
 		if (person) {
 			item.measurements.forEach(function(beaconMeasurement) {
