@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Persons = mongoose.model('Person');
+var Measurements = mongoose.model('Measurement');
+
 
 /* GET Persons listing. */
 router.get('/', function(req, res, next) {
@@ -28,6 +30,19 @@ router.get('/:id/measurements', function(req, res) {
 	 .exec(function(err, user) {
       res.send(user.measurements);
    });
+});
+
+router.get('/:id/location', function(req, res) {
+  var id = req.params.id;
+  Persons.findOne({'_id': id}, function(err, user) {
+		if (user) {
+			Measurements.find({'person': user._id}, function(err, docs) {
+				// determine location from docs
+				var location = {};
+    		res.send(location);
+			});
+		}
+  });
 });
 
 
