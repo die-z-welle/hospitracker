@@ -52,7 +52,7 @@
         	<h4>Beacons</h4>
 				</div>
         <div class="col-xs-3" ng-repeat="beacon in beacons">
-					<button type="button" class="btn btn-primary" ng-class="{'active': activeBeacons[getIdentifier(beacon)]}" ng-click="toggleBeacon(beacon)">{{beacon.minor}} {{beacon.major}} | {{beacon.room.identification}}</button>
+					<button type="button" class="btn btn-primary" ng-class="{'active': activeBeacons[getIdentifier(beacon)]}" ng-click="toggleBeacon(beacon)">{{beacon.mac}} | {{beacon.room.identification}}</button>
         </div>
       </div><br /><br />
 

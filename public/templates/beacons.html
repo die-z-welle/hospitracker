@@ -1,6 +1,7 @@
 <h1>Beacons</h1>
 <table class="table table-hover">
   <thead>
+    <th>MAC</th>
     <th>UUID</th>
     <th>Minor</th>
     <th>Major</th>
@@ -9,6 +10,7 @@
   </thead>
   <tbody>
     <tr ng-repeat="beacon in beacons | orderBy:'minor'">
+      <td>{{beacon.mac}}</td>
       <td>{{beacon.uuid}}</td>
       <td>{{beacon.minor}}</td>
       <td>{{beacon.major}}</td>
@@ -24,6 +26,15 @@
   </div>
   <div class="panel-body" ng-show="createDialog">
     <form name="beacondialog" ng-submit="create(newBeacon)">
+      <div style="margin-top: 20px;" class="row">
+        <div class="col-xs-10">
+            <div class="form-group" ng-class="{ 'has-error' : beacondialog.mac.$invalid && beacondialog.$submitted }">
+                <label>MAC</label>
+                <input name="mac" type="text" class="form-control" ng-model="newBeacon.mac">
+            </div>
+        </div>
+      </div>
+
       <div style="margin-top: 20px;" class="row">
         <div class="col-xs-10">
             <div class="form-group" ng-class="{ 'has-error' : beacondialog.uuid.$invalid && beacondialog.$submitted }">
@@ -59,7 +70,7 @@
         </div>
       </div>
 
-      <button class="btn btn-primary" type="submit" ng-disabled="(!newBeacon.uuid || !newBeacon.minor || !newBeacon.major || !newBeacon.room)">Add</button>
+      <button class="btn btn-primary" type="submit" ng-disabled="(!newBeacon.mac || !newBeacon.uuid || !newBeacon.minor || !newBeacon.major || !newBeacon.room)">Add</button>
     </form>
   </div>
 </div>

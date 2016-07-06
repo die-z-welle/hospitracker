@@ -40,6 +40,15 @@ router.get('/:id/location', function(req, res) {
 			.sort({'time': -1})
 			.limit(10)
 			.exec(function(err, docs) {
+				var measurements = [];
+				var prevDate = null;
+				docs.forEach(function(doc) {
+					if (!prevDate || prevDate === doc.time) {
+						measurements.push(doc);
+						prevDate = doc.time;
+					}
+				});
+
 				// determine location from docs
 				var location = {};
     		res.send(location);

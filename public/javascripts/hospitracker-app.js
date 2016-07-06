@@ -129,7 +129,7 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
 	}
 
 	function getIdentifier(beacon) {
-		return beacon.uuid + '.' + beacon.minor + '.' + beacon.major;
+		return beacon.mac;
 	};
 
 	$scope.toggleBeacon = function(beacon) {
@@ -140,7 +140,7 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
 		var found = false;
 		for (var i = 0; i < $scope.newRoom.beacons.length; i++) {
 			var beaconEntry = $scope.newRoom.beacons[i];
-			if (beaconEntry.uuid === beacon.uuid && beaconEntry.minor === beacon.minor && beaconEntry.major === beacon.major) {
+			if (beaconEntry.mac === beacon.mac) {
 				found = true;
 				$scope.newRoom.beacons.splice(i, 1);
 			}

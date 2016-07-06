@@ -13,7 +13,8 @@ require('./models/Measurement');
 require('./models/Person');
 require('./models/Room');
 
-mongoose.connect('mongodb://localhost/hospitracker');
+//mongoose.connect('mongodb://localhost/hospitracker');
+mongoose.connect('mongodb://ulbnp1btn3xlflr:BnALcDNomnifS4btLmY4@bj7vyctlqxrniyy-mongodb.services.clever-cloud.com:27017/bj7vyctlqxrniyy');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

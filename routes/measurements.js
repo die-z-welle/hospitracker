@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var item = req.body;
 
-	
+
   roomscore(item.measurements, function(room, accuracy) {
     console.log("RoomNr. " + room + ", Accuracy: " + accuracy);
   });
@@ -32,7 +32,7 @@ router.post('/', function(req, res, next) {
 	Person.findOne({'deviceId': item.deviceId}, function(err, person) {
 		if (person) {
 			item.measurements.forEach(function(beaconMeasurement) {
-				Beacon.findOne({'minor': beaconMeasurement.minor, 'major': beaconMeasurement.major, 'uuid': beaconMeasurement.uuid}, function(err, beacon) {
+				Beacon.findOne({'mac': beaconMeasurement.mac}, function(err, beacon) {
 					if (beacon) {
 						var measurement = {
 							"time": beaconMeasurement.datetime,
@@ -41,9 +41,8 @@ router.post('/', function(req, res, next) {
 							"beacon": beacon
 						};
 					  new Measurements(measurement).save();
-					  res.send(measurement);
 					} else {
-						console.log('no beacon found for ' + beaconMeasurement.uuid + ' ' + beaconMeasurement.minor + ' ' + beaconMeasurement.major);
+						console.log('no beacon found for ' + beaconMeasurement.mac);
 					}
 				});
 			});
@@ -51,6 +50,7 @@ router.post('/', function(req, res, next) {
 			console.log('no person found for deviceId' + item.deviceId);
 		}
 	});
+	res.send('');
 });
 
 
