@@ -36,7 +36,10 @@ router.get('/:id/location', function(req, res) {
   var id = req.params.id;
   Persons.findOne({'_id': id}, function(err, user) {
 		if (user) {
-			Measurements.find({'person': user._id}, function(err, docs) {
+			Measurements.find({'person': user._id})
+			.sort({'time': -1})
+			.limit(10)
+			.exec(function(err, docs) {
 				// determine location from docs
 				var location = {};
     		res.send(location);

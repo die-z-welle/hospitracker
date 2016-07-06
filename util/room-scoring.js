@@ -3,15 +3,10 @@ var Beacon = mongoose.model('Beacon');
 var Room = mongoose.model('Room');
 
 var getroom = function(beacon) {
-  Beacon.findOne({'minor': beacon.minor, 'major': beacon.major, 'uuid': beacon.uuid}, function(err, beacon) {
-    Room.findOne({'beacons': [beacon]}, function(err, room) {
-      if(room) {
-        console.log("found a room: " + room);
-        return room;
-      } else {
-        return null;
-      }
-    });
+  Beacon.findOne({'minor': beacon.minor, 'major': beacon.major, 'uuid': beacon.uuid})
+	.populate('room')
+	.exec(function(err, beacon) {
+		return beacon;
   });
 }
 
@@ -62,4 +57,4 @@ var roomscore = function(beaconList, callback) {
   callback(winner, accuracy);
 }
 
-module.exports.roomscore = roomscore;
+module.exports = roomscore;

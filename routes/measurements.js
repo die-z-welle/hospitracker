@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var item = req.body;
 
-  roomscore.roomscore(item.measurements, function(room, accuracy) {
+  roomscore(item.measurements, function(room, accuracy) {
     console.log("RoomNr. " + room + ", Accuracy: " + accuracy);
   });
 
