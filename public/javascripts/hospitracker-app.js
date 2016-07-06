@@ -64,6 +64,12 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
   $scope.go = function(userid) {
     $location.path('/userdetail/' + userid);
   };
+
+  $scope.delete = function(id) {
+    UserService.delete({id: id}).$promise.then(function() {
+      $scope.refresh();
+    });
+  };
 })
 .controller('BeaconCtrl', function($scope, $location, BeaconService, RoomService) {
   $scope.beacons = [];

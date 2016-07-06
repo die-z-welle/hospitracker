@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Persons = require('../models/Person');
-var BSON = require('bson');
 
 /* GET Persons listing. */
 router.get('/', function(req, res, next) {
@@ -16,7 +15,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res) {
    var id = req.params.id;
-   Persons.findOne({'_id': new BSON.ObjectID(id)}, function(err, user) {
+   Persons.findOne({'_id': id}, function(err, user) {
       res.send(user);
    });
 });
@@ -24,7 +23,7 @@ router.get('/:id', function(req, res) {
 
 router.get('/:id/measurements', function(req, res) {
    var id = req.params.id;
-   Persons.findOne({'_id': new BSON.ObjectID(id)})
+   Persons.findOne({'_id': id})
 	 .populate('measurements')
 	 .exec(function(err, user) {
       res.send(user.measurements);
@@ -38,5 +37,14 @@ router.post('/', function(req, res, next) {
   new Persons(item).save();
   res.send(item);
 });
+
+router.delete('/:id', function(req, res) {
+  var id = req.params.id;
+  Persons.findOne({'_id': id}, function(err, user) {
+    user.remove();
+    res.send('');
+	});
+});
+
 
 module.exports = router;

@@ -3,11 +3,15 @@
   <thead>
     <th>Firstname</th>
     <th>Lastname</th>
+    <th>DeviceId</th>
+		<th></th>
   </thead>
   <tbody>
-    <tr ng-repeat="user in users" ng-click="go(user._id)">
-      <td class="pointer">{{user.firstname}}</td>
-      <td class="pointer">{{user.lastname}}</td>
+    <tr ng-repeat="user in users">
+      <td class="pointer" ng-click="go(user._id)">{{user.firstname}}</td>
+      <td class="pointer" ng-click="go(user._id)">{{user.lastname}}</td>
+      <td class="pointer" ng-click="go(user._id)">{{user.deviceId}}</td>
+      <td><span class="glyphicon glyphicon-trash" ng-click="delete(user._id)"></span></td>
     </tr>
   </tbody>
 </table>
