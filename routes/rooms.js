@@ -35,6 +35,7 @@ router.get('/:id/usage', function(req, res) {
 	  Persons.find({}, function(err, users) {
 
 			Measurements.find({})
+			.sort({'time': -1})
 			.populate('beacon')
 			.limit(200)
 			.exec(function(err, measurements) {

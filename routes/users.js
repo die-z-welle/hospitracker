@@ -45,8 +45,8 @@ function findRooms(id, measurementLimit, single, res) {
   Persons.findOne({'_id': id}, function(err, user) {
 		if (user) {
 			Measurements.find({'person': user._id})
-			.populate('beacon')
 			.sort({'time': -1})
+			.populate('beacon')
 			.limit(measurementLimit)
 			.exec(function(err, docs) {
 				var measurements = {};

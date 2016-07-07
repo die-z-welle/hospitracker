@@ -34,6 +34,7 @@ router.post('/', function(req, res, next) {
 			item.measurements.forEach(function(beaconMeasurement) {
 				Beacon.findOne({'mac': beaconMeasurement.mac}, function(err, beacon) {
 					if (beacon) {
+						console.log('found beacon for ' + beaconMeasurement.mac);
 						var measurement = {
 							"time": beaconMeasurement.datetime,
 							"value": beaconMeasurement.value,
@@ -44,15 +45,16 @@ router.post('/', function(req, res, next) {
 							console.log(beacon.mac + ' / ' + JSON.stringify(doc));
 						});
 					} else {
-						//console.log('no beacon found for ' + beaconMeasurement.mac);
+						console.log('no beacon found for ' + beaconMeasurement.mac);
 					}
 				});
 			});
+			res.send('');
 		} else {
-			//console.log('no person found for deviceId' + item.deviceId);
+			console.log('no person found for deviceId' + item.deviceId);
+			res.send('');
 		}
 	});
-	res.send('');
 });
 
 
