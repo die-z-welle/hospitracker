@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     <tr ng-repeat="u in room.usage">
-      <td>{{u.time}}</td>
+      <td>{{u.time}} - {{u.exited}}</td>
       <td>{{u.user.firstname}} {{u.user.lastname}}</td>
       <td>{{u.accuracy}}</td>
     </tr>

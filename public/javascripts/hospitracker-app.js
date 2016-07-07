@@ -188,7 +188,14 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
   $scope.refresh = function() {
     RoomService.findById({id: $routeParams.id}).$promise.then(function(room) {
 			$scope.room = room;
-			$scope.room.usage = RoomService.usage({id: room._id});
+			$scope.room.usage = [];
+			RoomService.usage({id: room._id}).$promise.then(function(usages) {
+				usages.forEach(function(u) {
+					u.time = dateFormat(new Date(u.time));
+					u.exited = dateFormat(new Date(u.exited));
+					$scope.room.usage.push(u);
+				});
+			});
 		});
     $scope.beacons = BeaconService.find();
   };
@@ -204,12 +211,20 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
 
   $scope.removeBeacon = function(beacon) {
     beacon.room = null;
-    console.log(JSON.stringify(beacon));
     BeaconService.update({id: beacon._id}, beacon).$promise.then(function() {
       $scope.refresh();
       $scope.newBeaconEntry = null;
     });
   };
+
+	function dateFormat(d) {
+		return doubleDigits(d.getDate()) + '.' + doubleDigits(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + doubleDigits(d.getHours()) + ':' + doubleDigits(d.getMinutes()) + ':' + doubleDigits(d.getSeconds());
+	};
+
+	function doubleDigits(number) {
+		return (number < 10) ? ('0' + number) : number;
+	};
+
 })
 
 .controller('UserDetailCtrl', function($scope, $routeParams, UserService) {

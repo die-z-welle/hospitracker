@@ -57,7 +57,15 @@ router.get('/:id/usage', function(req, res) {
 					}
 				});
 				roomscore(data, function(rooms) {
-					res.send(rooms.filter(function(r) { return r.room._id.toString() === id; }));
+					var result = [];
+					var sorted = rooms.sort(function(a, b) { return (a.time < b.time) ? -1 : 1; });
+					for (var i = 1; i < sorted.length; i++) {
+						if (sorted[i-1].room._id.toString() === id) {
+							sorted[i-1].exited = sorted[i].time;
+							result.push(sorted[i-1]);
+						}
+					}
+					res.send(result);
 				});
 			});
 
