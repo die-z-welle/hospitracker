@@ -17,7 +17,7 @@ var determinerooms = function(measurementsArrays, callback) {
 					var rssi = measurement.value;
 
 					if (!scores[beacon.room.identification]) {
-						scores[beacon.room.identification] = { time: measurements.time, value: 0, numberOfBeacons: 0, room: beacon.room, average: function() { return (this.value / this.numberOfBeacons); } };
+						scores[beacon.room.identification] = { time: measurements.time, user: measurements.user, value: 0, numberOfBeacons: 0, room: beacon.room, average: function() { return (this.value / this.numberOfBeacons); } };
 					}
 					scores[beacon.room.identification].value += transformRSSItoScore(rssi);
 	        scores[beacon.room.identification].numberOfBeacons++;

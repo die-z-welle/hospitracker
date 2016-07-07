@@ -59,7 +59,7 @@ function findRooms(id, measurementLimit, single, res) {
 
 				var test = [];
 				for (i in measurements) {
-					test.push({time: i, values: measurements[i]});
+					test.push({time: i, values: measurements[i], user: user});
 				}
 				roomscore(test, function(rooms) {
 					var result = (single) ? rooms[0] : rooms;

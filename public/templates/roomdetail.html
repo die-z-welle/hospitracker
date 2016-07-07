@@ -2,6 +2,24 @@
 <h3>{{room.designation}}</h3>
 <p>{{room.purpose}}</p>
 
+<h3>Room usage</h3>
+<table class="table table-hover">
+  <thead>
+    <th>Time</th>
+    <th>User</th>
+    <th>Accuracy</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="u in room.usage">
+      <td>{{u.time}}</td>
+      <td>{{u.user.firstname}} {{u.user.lastname}}</td>
+      <td>{{u.accuracy}}</td>
+      <td>{{u.room.identification}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Beacons</h3>
 <table class="table table-hover">
   <thead>
     <th>UUID</th>

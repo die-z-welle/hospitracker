@@ -186,7 +186,10 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
   $scope.beacons = [];
 
   $scope.refresh = function() {
-    $scope.room = RoomService.findById({id: $routeParams.id});
+    RoomService.findById({id: $routeParams.id}).$promise.then(function(room) {
+			$scope.room = room;
+			$scope.room.usage = RoomService.usage({id: room._id});
+		});
     $scope.beacons = BeaconService.find();
   };
   $scope.refresh();
@@ -255,7 +258,7 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     });
 })
 .service('RoomService', function($resource) {
-    return $resource('/rooms/:id', {}, {
+    return $resource('/rooms/:id/:page', {}, {
         find: {
             method: 'GET',
             isArray: true
@@ -274,7 +277,15 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
             params: {
                 id: '@id'
             }
-        }
+        },
+				usage: {
+					method: 'GET',
+					params: {
+						id: '@id',
+						page: 'usage'
+					},
+					isArray: true
+				}
     });
 })
 .service('UserService', function($resource) {
