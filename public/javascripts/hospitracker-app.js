@@ -55,7 +55,11 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
 	$scope.measurements = MeasurementService.find();
 
 	$scope.dateFormat = function(d) {
-		return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+		return doubleDigits(d.getDate()) + '.' + doubleDigits(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + doubleDigits(d.getHours()) + ':' + doubleDigits(d.getMinutes()) + ':' + doubleDigits(d.getSeconds());
+	};
+
+	function doubleDigits(number) {
+		return (number < 10) ? ('0' + number) : number;
 	};
 
 })
@@ -219,7 +223,11 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
 	});
 
 	$scope.dateFormat = function(d) {
-		return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+		return doubleDigits(d.getDate()) + '.' + doubleDigits(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + doubleDigits(d.getHours()) + ':' + doubleDigits(d.getMinutes()) + ':' + doubleDigits(d.getSeconds());
+	};
+
+	function doubleDigits(number) {
+		return (number < 10) ? ('0' + number) : number;
 	};
 })
 

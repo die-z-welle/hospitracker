@@ -12,7 +12,7 @@ var determinerooms = function(measurementsArrays, callback) {
 		measurementsArrays.forEach(function(measurements) {
 			var scores = {};
 			measurements.values.forEach(function(measurement) {
-				var beacon = beacons.find(function(b) { return b.mac === measurement.beacon.mac; });
+				var beacon = beacons.find(function(b) { return (measurement.beacon) && (b.mac === measurement.beacon.mac); });
 				if (beacon) {
 					var rssi = measurement.value;
 
