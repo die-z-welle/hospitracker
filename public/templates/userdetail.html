@@ -7,7 +7,7 @@
     <th>Accuracy</th>
   </thead>
   <tbody>
-    <tr ng-repeat="location in user.locations | orderBy:'time'">
+    <tr ng-repeat="location in user.locations | orderBy:'-time'">
       <td>{{location.time}}</td>
       <td>{{location.room.identification}}</td>
       <td>{{location.accuracy}}</td>

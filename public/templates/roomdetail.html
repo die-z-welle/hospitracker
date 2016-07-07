@@ -10,7 +10,7 @@
     <th>Accuracy</th>
   </thead>
   <tbody>
-    <tr ng-repeat="u in room.usage">
+    <tr ng-repeat="u in room.usage | orderBy: '-time'">
       <td>{{u.time}} - {{u.exited}}</td>
       <td>{{u.user.firstname}} {{u.user.lastname}}</td>
       <td>{{u.accuracy}}</td>

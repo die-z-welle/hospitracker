@@ -29,7 +29,7 @@
 		<th>Value</th>
   </thead>
   <tbody>
-    <tr ng-repeat="measurement in measurements | orderBy:'time'">
+    <tr ng-repeat="measurement in measurements | orderBy:'-time'">
       <td>{{measurement.person.firstname}} {{measurement.person.lastname}}</td>
       <td>{{measurement.time}}</td>
 			<td>{{measurement.beacon.minor}} {{measurement.beacon.major}} {{measurement.beacon.uuid}}</td>
