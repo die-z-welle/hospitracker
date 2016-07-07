@@ -3,6 +3,17 @@
 <p>{{room.purpose}}</p>
 
 <h3>Room usage</h3>
+
+Von {{min}} bis {{max}}
+<div class="row" ng-repeat="usage in usages">
+	<h4>{{getUser($index).firstname}} {{getUser($index).lastname}}</h4>
+	<div class="progress">
+	  <div class="progress-bar progress-bar-success" ng-repeat="entry in usage" style="margin-left: {{entry.left * 100}}%; width: {{entry.width * 100}}%">
+	    <span class="sr-only">{{entry.width}}</span>
+	  </div>
+	</div>
+</div>
+<br />
 <table class="table table-hover">
   <thead>
     <th>Time</th>

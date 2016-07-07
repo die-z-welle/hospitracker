@@ -59,14 +59,18 @@ router.get('/:id/usage', function(req, res) {
 				});
 				roomscore(data, function(rooms) {
 					var result = [];
-					var sorted = rooms.sort(function(a, b) { return (a.time < b.time) ? -1 : 1; });
-					for (var i = 1; i < sorted.length; i++) {
-						if (sorted[i-1].room._id.toString() === id) {
-							sorted[i-1].exited = sorted[i].time;
-							result.push(sorted[i-1]);
+					users.forEach(function(user) {
+						var userBased = rooms
+															.filter(function(r) { return r.user._id.toString() === user._id.toString(); })
+															.sort(function(a, b) { return (a.time < b.time) ? -1 : 1; });
+						for (var i = 1; i < userBased.length; i++) {
+							if (userBased[i-1].room._id.toString() === id) {
+								userBased[i-1].exited = userBased[i].time;
+								result.push(userBased[i-1]);
+							}
 						}
-					}
-					res.send(result);
+					});
+					res.send(result.sort(function(a, b) { return (a.time < b.time) ? -1 : 1; }));
 				});
 			});
 

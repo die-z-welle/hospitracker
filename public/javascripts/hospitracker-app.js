@@ -189,16 +189,56 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     RoomService.findById({id: $routeParams.id}).$promise.then(function(room) {
 			$scope.room = room;
 			$scope.room.usage = [];
+
 			RoomService.usage({id: room._id}).$promise.then(function(usages) {
+				var separatedValues = {};
+
+				var max = 0;
+				var min = 0;
+				$scope.userMap = [];
 				usages.forEach(function(u) {
-					u.time = dateFormat(new Date(u.time));
-					u.exited = dateFormat(new Date(u.exited));
+					if (!separatedValues[u.user._id]) {
+						separatedValues[u.user._id] = [];
+						$scope.userMap.push(u.user);
+					}
+					u.time = new Date(u.time);
+					u.exited = new Date(u.exited);
+					separatedValues[u.user._id].push(u);
+
+					if (min == 0 || u.time.getTime() < min) {
+						min = u.time.getTime();
+					}
+					if (max < u.exited.getTime()) {
+						max = u.exited.getTime();
+					}
 					$scope.room.usage.push(u);
 				});
+
+				$scope.usages = [];
+				for (i in separatedValues) {
+					$scope.usages.push(separatedValues[i].sort(function(a, b) { return (a.time.getTime() - b.time.getTime()); } ));
+				}
+
+				var totalLength = max - min;
+				$scope.usages.forEach(function(entry) {
+					var lastExited = min;
+					entry.forEach(function(u) {
+						u.left = (u.time.getTime() - lastExited) / totalLength;
+						u.width = (u.exited.getTime() - u.time.getTime()) / totalLength;
+						lastExited = u.exited.getTime();
+					});
+				});
+				$scope.max = new Date(max);
+				$scope.min = new Date(min);
 			});
 		});
     $scope.beacons = BeaconService.find();
   };
+
+	$scope.getUser = function(index) {
+		return $scope.userMap[index];
+	};
+
   $scope.refresh();
 
   $scope.addBeacon = function(beacon) {
