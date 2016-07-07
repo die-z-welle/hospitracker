@@ -12,9 +12,7 @@
       <td>{{user.lastname}}</td>
 			<td>{{user.deviceId}}</td>
 			<td>
-				<div ng-repeat="location in user.locations">
-					{{ location.time }}: <br />{{location.room.identification}} | {{location.accuracy}}
-				</div>
+				{{ user.location.time }}: <br />{{user.location.room.identification}} | {{user.location.accuracy}}
 			</td>
     </tr>
   </tbody>

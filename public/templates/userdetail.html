@@ -7,10 +7,10 @@
     <th>Exited</th>
   </thead>
   <tbody>
-    <tr ng-repeat="abidance in user.abidances | orderBy:'joined'">
-      <td>{{abidance.room.identification}}</td>
-      <td>{{abidance.joined}}</td>
-      <td>{{abidance.left}}</td>
+    <tr ng-repeat="location in user.locations | orderBy:'time'">
+      <td>{{location.time}}</td>
+      <td>{{location.room.identification}}</td>
+      <td>{{location.accuracy}}</td>
     </tr>
   </tbody>
 </table>

@@ -33,7 +33,36 @@ router.get('/:id/measurements', function(req, res) {
    });
 });
 
-router.get('/:id/location', function(req, res) {
+router.get('/:id/lastlocation', function(req, res) {
+  var id = req.params.id;
+  Persons.findOne({'_id': id}, function(err, user) {
+		if (user) {
+			Measurements.find({'person': user._id})
+			.populate('beacon')
+			.sort({'time': -1})
+			.limit(20)
+			.exec(function(err, docs) {
+				var measurements = {};
+				docs.forEach(function(doc) {
+					if (!measurements[doc.time]) {
+						measurements[doc.time] = [];
+					}
+					measurements[doc.time].push(doc);
+				});
+
+				var test = [];
+				for (i in measurements) {
+					test.push({time: i, values: measurements[i]});
+				}
+				roomscore(test, function(rooms) {
+					res.send(rooms[0]);
+				});
+			});
+		}
+  });
+});
+
+router.get('/:id/locations', function(req, res) {
   var id = req.params.id;
   Persons.findOne({'_id': id}, function(err, user) {
 		if (user) {

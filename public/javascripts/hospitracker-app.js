@@ -41,17 +41,14 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     })
     .otherwise('/');
 }])
+
 .controller('MainCtrl', function($scope, UserService, MeasurementService) {
   UserService.find().$promise.then(function(result) {
 		$scope.users = result;
 		$scope.users.forEach(function(user) {
-			user.locations = [];
-			UserService.location({id: user._id}).$promise.then(function(locs) {
-				locs.forEach(function(loc) {
-					var l = loc;
-					l.time = $scope.dateFormat(new Date(loc.time));
-					user.locations.push(l);
-				});
+			UserService.lastlocation({id: user._id}).$promise.then(function(loc) {
+					user.location = loc;
+					user.location.time = $scope.dateFormat(new Date(loc.time));
 			});
 		});
 	});
@@ -62,6 +59,7 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
 	};
 
 })
+
 .controller('UserCtrl', function($scope, $location, UserService) {
   $scope.users = [];
 
@@ -88,6 +86,7 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     });
   };
 })
+
 .controller('BeaconCtrl', function($scope, $location, BeaconService, RoomService) {
   $scope.beacons = [];
   $scope.rooms = [];
@@ -112,6 +111,7 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     });
   };
 })
+
 .controller('RoomCtrl', function($scope, $location, RoomService, BeaconService) {
   $scope.rooms = [];
 	$scope.beacons = [];
@@ -176,6 +176,7 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
 	};
 
 })
+
 .controller('RoomDetailCtrl', function($scope, $routeParams, RoomService, BeaconService) {
   $scope.room = {};
   $scope.beacons = [];
@@ -203,9 +204,25 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
     });
   };
 })
+
 .controller('UserDetailCtrl', function($scope, $routeParams, UserService) {
-  $scope.user = UserService.findById({id: $routeParams.id});
+  UserService.findById({id: $routeParams.id}).$promise.then(function(user) {
+		$scope.user = user;
+		user.locations = [];
+		UserService.locations({id: user._id}).$promise.then(function(locs) {
+			locs.forEach(function(loc) {
+				var l = loc;
+				l.time = $scope.dateFormat(new Date(loc.time));
+				user.locations.push(l);
+			});
+		});
+	});
+
+	$scope.dateFormat = function(d) {
+		return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+	};
 })
+
 .service('BeaconService', function($resource) {
     return $resource('/beacons/:id', {}, {
         find: {
@@ -273,13 +290,20 @@ angular.module('hospitracker', ['ngResource', 'ngRoute'])
         id: '@id'
       }
     },
-		location: {
+		locations: {
 			method: 'GET',
 			params: {
 				id: '@id',
-				page: 'location'
+				page: 'locations'
 			},
 			isArray: true
+		},
+		lastlocation: {
+			method: 'GET',
+			params: {
+				id: '@id',
+				page: 'lastlocation'
+			}
 		}
   });
 })
