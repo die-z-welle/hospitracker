@@ -6,16 +6,26 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-
+		<div class="text-center" style="margin-bottom: 10px;">
+			<img width="25%" src="/images/logo.png" />
+		</div>
     <nav class="navbar navbar-default">
-      <div class="container">
-        <ul class="nav nav-pills ">
-          <li role="presentation" ng-class="{active: isActive('landingpage')}"><a href="#/">Home</a></li>
-          <li role="presentation" ng-class="{active: isActive('rooms')}"><a href="#/rooms">Rooms</a></li>
-          <li role="presentation" ng-class="{active: isActive('beacons')}"><a href="#/beacons">Beacons</a></li>
-          <li role="presentation" ng-class="{active: isActive('users')}"><a href="#/users">Users</a></li>
-        </ul>
-      </div>
+		  <div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+					<!--
+      		<a class="navbar-brand" href="#/"><img height="28" src="/images/logo.png" alt="hospitracker" /></a>
+					-->
+				</div>
+		    <div class="container">
+	        <ul class="nav navbar-nav ">
+	          <li role="presentation" ng-class="{active: isActive('landingpage')}"><a href="#/">Home</a></li>
+	          <li role="presentation" ng-class="{active: isActive('rooms')}"><a href="#/rooms">Rooms</a></li>
+	          <li role="presentation" ng-class="{active: isActive('beacons')}"><a href="#/beacons">Beacons</a></li>
+	          <li role="presentation" ng-class="{active: isActive('users')}"><a href="#/users">Users</a></li>
+	        </ul>
+	      </div>
+			</div>
     </nav>
 
     <div class="container" ng-view>
